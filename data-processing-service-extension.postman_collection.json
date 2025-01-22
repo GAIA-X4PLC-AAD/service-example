@@ -1,0 +1,199 @@
+{
+	"info": {
+		"_postman_id": "1cfb2b2c-a2ab-4f79-8dc6-b2104fab0878",
+		"name": "Data Processing Service Extension",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "36002816"
+	},
+	"item": [
+		{
+			"name": "Provider Asset Creation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"@context\": {\r\n    \"@vocab\": \"https://w3id.org/edc/v0.0.1/ns/\"\r\n  },\r\n  \"@id\": \"serviceAsset\",\r\n  \"properties\": {\r\n  },\r\n  \"dataAddress\": {\r\n    \"type\": \"service\",\r\n    \"sourceFolder\": \"placeholder\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:19193/management/v3/assets"
+			},
+			"response": []
+		},
+		{
+			"name": "Provider Policy Creation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"@context\": {\r\n    \"@vocab\": \"https://w3id.org/edc/v0.0.1/ns/\",\r\n    \"odrl\": \"http://www.w3.org/ns/odrl/2/\"\r\n  },\r\n  \"@id\": \"use-eu\",\r\n  \"policy\": {\r\n    \"@context\": \"http://www.w3.org/ns/odrl.jsonld\",\r\n    \"@type\": \"Set\",\r\n    \"permission\": [],\r\n    \"prohibition\": [],\r\n    \"obligation\": []\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:19193/management/v2/policydefinitions"
+			},
+			"response": []
+		},
+		{
+			"name": "Provider Contract Creation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"@context\": {\r\n    \"@vocab\": \"https://w3id.org/edc/v0.0.1/ns/\"\r\n  },\r\n  \"@id\": \"contract-definition\",\r\n  \"accessPolicyId\": \"use-eu\",\r\n  \"contractPolicyId\": \"use-eu\",\r\n  \"assetsSelector\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:19193/management/v2/contractdefinitions"
+			},
+			"response": []
+		},
+		{
+			"name": "Provider Register Service to Asset",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"assetId\": \"serviceAsset\",\r\n    \"serviceScriptPath\" : \"./trigger_service.sh\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:19191/api/service/register-service-to-asset"
+			},
+			"response": []
+		},
+		{
+			"name": "Provider Get Contract Id",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"@context\": { \"@vocab\": \"https://w3id.org/edc/v0.0.1/ns/\" },\r\n  \"@type\": \"DatasetRequest\",\r\n  \"@id\": \"serviceAsset\",\r\n  \"counterPartyAddress\": \"http://localhost:19194/protocol\",\r\n  \"counterPartyId\": \"consumer\",\r\n  \"protocol\": \"dataspace-protocol-http\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:19193/management/v2/catalog/dataset/request"
+			},
+			"response": []
+		},
+		{
+			"name": "Provider Create Service Metadata",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"identifierPrefix\": \"https://www.gaia-x4plcaad.info/tt/claims\",\r\n    \"legalParticipant\": \"https://participant.gxfs.gx4fm.org/tracetronic/legalParticipant.json\",\r\n    \"legalRegistration\": \"https://participant.gxfs.gx4fm.org/tracetronic/legalRegistration.json\",\r\n    \"termsAndConditions\": \"https://participant.gxfs.gx4fm.org/tracetronic/termsAndConditions.json\",\r\n    \"physicalResourceLocation\": \"DE\",\r\n    \"physicalResourceName\": \"TT Server\",\r\n    \"physicalResourceDescription\": \"A TT Server where ecu.test runs on\",\r\n    \"softwareResourceName\": \"TT Data Processing Service\",\r\n    \"softwareResourceDescription\": \"Software which allows on demand data processing, provided by TT\",\r\n    \"serviceAccessPointName\": \"EDC Access point\",\r\n    \"serviceAccessPointHost\": \"example.org\",\r\n    \"serviceAccessPointProtocol\": \"https\",\r\n    \"serviceAccessPointVersion\": \"v0.6.4\",\r\n    \"serviceAccessPointPort\": \"19191\",\r\n    \"serviceAccessPointOpenAPI\": \"example.org\",\r\n    \"serviceName\": \"TT Data Processing Service.\",\r\n    \"serviceDescription\": \"Service which allows on demand data processing\",\r\n    \"serviceContractId\": \"Y29udHJhY3QtZGVmaW5pdGlvbg==:c2VydmljZUFzc2V0:MTAxNzE5MjUtMTAzMC00N2I0LTgxMjktYzU4MjhkNGEzZmMw\",\r\n    \"requiredFiles\": [\r\n        {\r\n            \"description\": \"A scenario following the ASAM OpenSCENARIO version 2.0.0 standard as a .osc file\",\r\n            \"specification\": \"https://www.asam.net/standards/detail/openscenario/v200/\"        },\r\n        {\r\n            \"description\": \"A road network following the ASAM OpenDRIVE v1.8.0 standard as a .xodr file\",\r\n            \"specification\": \"https://www.asam.net/standards/detail/opendrive/\"        }\r\n    ],\r\n    \"resultingFiles\": [\r\n        {\r\n            \"description\": \"The ground-truth data of the executed simulation following the ASAM OSI v3.7.0 standard as a .osi file\",\r\n            \"specification\": \"https://www.asam.net/standards/detail/osi/\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:19191/api/service/send-service-metadata-to-fc"
+			},
+			"response": []
+		},
+		{
+			"name": "Consumer Get Dataset",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"@context\": { \"@vocab\": \"https://w3id.org/edc/v0.0.1/ns/\" },\r\n  \"@type\": \"DatasetRequest\",\r\n  \"@id\": \"serviceAsset\",\r\n  \"counterPartyAddress\": \"http://localhost:19194/protocol\",\r\n  \"counterPartyId\": \"consumer\",\r\n  \"protocol\": \"dataspace-protocol-http\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:29193/management/v2/catalog/dataset/request"
+			},
+			"response": []
+		},
+		{
+			"name": "Consumer Contract Negotiation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"@context\": {\r\n    \"@vocab\": \"https://w3id.org/edc/v0.0.1/ns/\"\r\n  },\r\n  \"@type\": \"ContractRequest\",\r\n  \"counterPartyAddress\": \"http://localhost:19194/protocol\",\r\n  \"protocol\": \"dataspace-protocol-http\",\r\n  \"policy\": {\r\n    \"@context\": \"http://www.w3.org/ns/odrl.jsonld\",\r\n    \"@id\": \"Y29udHJhY3QtZGVmaW5pdGlvbg==:c2VydmljZUFzc2V0:MTAxNzE5MjUtMTAzMC00N2I0LTgxMjktYzU4MjhkNGEzZmM\",\r\n    \"@type\": \"Offer\",\r\n    \"assigner\": \"provider\",\r\n    \"target\": \"serviceAsset\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:29193/management/v2/contractnegotiations"
+			},
+			"response": []
+		},
+		{
+			"name": "Consumer Contract Agreement",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:29193/management/v2/contractnegotiations/2ca37946-ea43-43c3-bf0a-afce0f5b93e6"
+			},
+			"response": []
+		},
+		{
+			"name": "Consumer Send Data",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"contractAgreementId\": \"8579454d-6b7a-4eff-a392-28762bd8ac4e\",\r\n    \"counterPartyAddress\": \"localhost:19200\",\r\n    \"filesToSend\": [\r\n        \"/mnt/c/ADAS/ServiceDemo/ServiceConsumer/dataToSend/ALKS_Road.xodr\",\r\n        \"/mnt/c/ADAS/ServiceDemo/ServiceConsumer/dataToSend/ALKS_Scenario_4.4_2_CutInUnavoidableCollision_TEMPLATE.xosc\"\r\n    ],\r\n    \"returnFolderPath\": \"/mnt/c/ADAS/ServiceDemo/ServiceConsumer/Result\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:29191/api/service/start-data-transfer"
+			},
+			"response": []
+		},
+		{
+			"name": "Provider Send Result",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"contractAgreementId\": \"8579454d-6b7a-4eff-a392-28762bd8ac4e\",\r\n    \"filesToSend\": [\r\n        \"/mnt/c/adas/devops-workflow-adas/demo/workspace/TestReports/EDC_Connector_Execute_Service_2024-08-13_140350/esmini_ALKS_Scenario_4.4_2_CutInUnavoidableCollision_TEMPLATE.osi\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:19191/api/service/start-result-transfer"
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,22 @@
+NOTICE file according to Apache License Version 2.0 Section 4. (d)
+------------------------------------------------------------------
+
+This work is based on the "Samples" repository of the "Eclipse Dataspace
+Components" project. That means, the general structure of this repository follows
+the structure of the "Samples" repository and some files have been used or
+modified to fit the use case of this repository. The used files include the
+content of the "gradle" and the "resources" folders as well as the .gitignore,
+LICENSE, build.gradle.kts, gradle.properties, gradlew, gradlew.bat and
+settings.gradle.kts files. In the "data-processing-service" folder, the contents
+of the "resources/certs", "resources/configuration" folders and the
+build.gradle.kts file are also based on the "Samples" repo.
+Please refer to the individual files for their copyright.
+
+The software makes use of third-party dependencies. A list of dependencies is
+provided in the dependencies.html files. Note, that their software is only linked
+via the gradle build file and is not directly distributed by this work, since this
+work does not provide a compiled jar-file. The dependencies are downloaded and
+integrated when building the jar-file.
+
+The rest of the files, especially the source code files under
+data-processing-service/src/java/ are under the copyright of tracetronic GmbH.
